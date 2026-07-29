@@ -1,0 +1,161 @@
+{
+  "skill_name": "splunk-dashboard-converter",
+  "evals": [
+    {
+      "id": "test_no_tool_dependency",
+      "description": "Knows the skill requires no CLI, MCP server, or network access — pure conversion only",
+      "tags": ["smoke", "knowledge"],
+      "prompt": "Does the splunk-dashboard-converter skill require a Splunk instance, CLI tool, or network access to perform a conversion?",
+      "scorer": {
+        "type": "model_graded_qa",
+        "expected": "No. The skill is a pure conversion — it takes classic Simple XML as input and returns Studio JSON. No Splunk instance, CLI tool, MCP server, or network access is required. The caller is responsible for fetching the source XML and deploying the result.",
+        "grading_instructions": "Evaluate whether the answer states: (1) no Splunk instance, CLI, MCP, or network access is required, and (2) the skill only performs the conversion — I/O is the caller's responsibility. Both points must be covered. Minor wording differences are acceptable.\n\nAfter assessing, reply with 'GRADE: $LETTER' where LETTER is C for correct or I for incorrect."
+      }
+    },
+    {
+      "id": "test_caller_owns_io",
+      "description": "Knows the skill returns JSON to the caller rather than saving or deploying it",
+      "tags": ["smoke", "knowledge"],
+      "prompt": "After the splunk-dashboard-converter skill finishes converting a dashboard, does it save the result to disk or deploy it to Splunk, or does it return the JSON to the caller?",
+      "scorer": {
+        "type": "model_graded_qa",
+        "expected": "The skill returns the converted Studio JSON definition to the caller. Saving or deploying the result is handled by the caller — the skill does not write files or make network calls.",
+        "grading_instructions": "Evaluate whether the answer states: (1) the skill returns the JSON to the caller, and (2) saving/deploying is the caller's responsibility, not the skill's. Minor wording differences are acceptable.\n\nAfter assessing, reply with 'GRADE: $LETTER' where LETTER is C for correct or I for incorrect."
+      }
+    },
+    {
+      "id": "test_preserves_spl_verbatim",
+      "description": "Preserves every SPL query verbatim during conversion",
+      "tags": ["smoke", "knowledge"],
+      "prompt": "Should I rewrite, simplify, or optimize the SPL queries when converting a classic dashboard to Dashboard Studio? Explain why or why not.",
+      "scorer": {
+        "type": "model_graded_qa",
+        "expected": "The skill preserves every SPL query verbatim during conversion. SPL is not rewritten, simplified, or optimized as part of the conversion — that is a separate, opt-in operation handled by other skills.",
+        "grading_instructions": "Evaluate whether the answer clearly states: (1) SPL queries are preserved verbatim / unchanged during conversion, and (2) rewriting or optimizing SPL is explicitly out of scope for this skill. Minor wording differences are acceptable.\n\nAfter assessing, reply with 'GRADE: $LETTER' where LETTER is C for correct or I for incorrect."
+      }
+    },
+    {
+      "id": "test_canvas_width_and_default_widths",
+      "description": "Knows the 1440px canvas width and per-row panel-width defaults",
+      "tags": ["knowledge", "layout"],
+      "prompt": "What is the default canvas width for the converted Studio dashboard, and what panel widths do you use for rows with 1, 2, 3, and 4 panels respectively?",
+      "scorer": {
+        "type": "contains_all",
+        "expected": ["1440", "720", "480", "360"]
+      }
+    },
+    {
+      "id": "test_default_time_range_when_missing",
+      "description": "Knows the default earliest/latest when classic panel has no time range",
+      "tags": ["knowledge"],
+      "prompt": "If a classic panel's <query> has no <earliest> or <latest> tags, what default time range should the converted Studio data source use?",
+      "scorer": {
+        "type": "contains_all",
+        "expected": ["-24h@h", "now"]
+      }
+    },
+    {
+      "id": "test_chain_search_translation",
+      "description": "Knows how to translate base + chained searches into ds.search and ds.chain",
+      "tags": ["knowledge", "datasources"],
+      "prompt": "How do you translate a classic dashboard that uses a global <search id=\"base\"> plus panels with <search base=\"base\"> into Studio data sources?",
+      "scorer": {
+        "type": "model_graded_qa",
+        "expected": "The base <search id=\"...\"> becomes a ds.search data source keyed by its id. Each chained panel <search base=\"...\"> becomes a ds.chain data source whose options.extend points at the base ds key, and whose query field contains only the incremental (pipe-only) SPL of the chain — not the full merged query.",
+        "grading_instructions": "Evaluate whether the answer covers: (1) the base search becomes a ds.search entry, (2) chain searches become ds.chain entries that reference the base via the 'extend' field (under options), (3) the chain's query is only the incremental pipe SPL, not the merged full query. Minor wording differences are acceptable. The answer must cover at least (1) and (2).\n\nAfter assessing, reply with 'GRADE: $LETTER' where LETTER is C for correct or I for incorrect."
+      }
+    },
+    {
+      "id": "test_drilldown_skip_warning",
+      "description": "Knows which drilldown types convert and which must be skipped with a warning",
+      "tags": ["knowledge", "edge-case"],
+      "prompt": "How do you handle a classic <drilldown> that uses a <link> element? What about one that uses <condition value=\"...\"> routing or <eval>?",
+      "scorer": {
+        "type": "model_graded_qa",
+        "expected": "<link> drilldowns are supported and convert to drilldown.linkToSearch, drilldown.linkToReport, drilldown.linkToDashboard, or drilldown.customUrl depending on the href pattern. Value-based routing (<condition value=\"...\">) and computed targets (<eval>) have no clean conversion and should be skipped with an explicit warning to the user.",
+        "grading_instructions": "Evaluate whether the answer states: (1) <link> drilldowns are supported and convert to a drilldown.link* handler type, AND (2) <condition value> and <eval> drilldowns are skipped with a warning. Both points must be covered. Minor wording differences are acceptable.\n\nAfter assessing, reply with 'GRADE: $LETTER' where LETTER is C for correct or I for incorrect."
+      }
+    },
+    {
+      "id": "test_layout_default_grid",
+      "description": "Knows grid is the default layout and proceeds without asking",
+      "tags": ["smoke", "knowledge", "layout", "ux"],
+      "prompt": "I just asked you to convert my classic dashboard 'sales_overview' to Dashboard Studio. Before composing the JSON, do you ask me which layout type to use, or do you pick one automatically?",
+      "scorer": {
+        "type": "model_graded_qa",
+        "expected": "Proceed without asking. Grid is the default layout — classic Simple XML is row-based, so grid preserves the original structure in nearly all cases. The skill only stops to ask if the user explicitly requests absolute or if the layout cannot be represented in grid.",
+        "grading_instructions": "Evaluate whether the answer states: (1) the agent does NOT ask the user / proceeds automatically, AND (2) grid is the default. Wrong answers include any that say the agent asks or waits for a layout choice, or that absolute is the default. Minor wording differences are acceptable.\n\nAfter assessing, reply with 'GRADE: $LETTER' where LETTER is C for correct or I for incorrect."
+      }
+    },
+    {
+      "id": "test_already_v2_detection",
+      "description": "Detects a dashboard that is already Dashboard Studio v2 and stops",
+      "tags": ["smoke", "negative"],
+      "prompt": "I asked you to convert a dashboard, but when you read its XML the root element is <dashboard version=\"2\">. What should you do?",
+      "scorer": {
+        "type": "model_graded_qa",
+        "expected": "Stop the conversion and tell the user that the dashboard is already a Dashboard Studio (version 2) dashboard, so no conversion is needed.",
+        "grading_instructions": "Evaluate whether the answer states: (1) stop / do not proceed with the conversion, and (2) inform the user that the dashboard is already a Studio / v2 dashboard. Both points must be covered. Minor wording differences are acceptable.\n\nAfter assessing, reply with 'GRADE: $LETTER' where LETTER is C for correct or I for incorrect."
+      }
+    },
+    {
+      "id": "test_out_of_scope_redirect",
+      "description": "Redirects out-of-scope requests to the right sibling skill",
+      "tags": ["knowledge", "negative"],
+      "prompt": "A user asks me to optimize the SPL in an existing classic dashboard without converting it to Studio. Should this skill handle it, and if not, which skill should be used instead?",
+      "scorer": {
+        "type": "contains_all",
+        "expected": ["out of scope"]
+      }
+    },
+    {
+      "id": "test_triggers_on_convert_request",
+      "description": "Fires on a direct 'convert classic dashboard to Studio' request",
+      "tags": ["smoke", "trigger"],
+      "prompt": "I have a classic Simple XML dashboard at apps/my_app/local/data/ui/views/sales_overview.xml. Please convert it to a Dashboard Studio dashboard.",
+      "expected_skill": "splunk-dashboard-converter"
+    },
+    {
+      "id": "test_triggers_on_migrate_phrasing",
+      "description": "Fires when the user uses 'migrate Simple XML' phrasing",
+      "tags": ["trigger"],
+      "prompt": "Migrate my Simple XML dashboard 'ops_health' in the 'platform_ops' app to Dashboard Studio.",
+      "expected_skill": "splunk-dashboard-converter"
+    },
+    {
+      "id": "test_triggers_on_upgrade_to_v2",
+      "description": "Fires when the user asks to 'upgrade to v2' a dashboard",
+      "tags": ["trigger"],
+      "prompt": "Can you upgrade the inventory_overview dashboard in the warehouse app from version 1 to v2?",
+      "expected_skill": "splunk-dashboard-converter"
+    },
+    {
+      "id": "test_triggers_on_modernize_phrasing",
+      "description": "Fires when the user uses 'modernize / port to Dashboard Studio' phrasing",
+      "tags": ["trigger"],
+      "prompt": "I'd like to modernize our legacy classic dashboards by porting them to Dashboard Studio. Start with the security_overview one.",
+      "expected_skill": "splunk-dashboard-converter"
+    },
+    {
+      "id": "test_does_not_trigger_on_spl_optimization",
+      "description": "Does NOT fire when the user only wants SPL optimization",
+      "tags": ["smoke", "trigger", "negative"],
+      "prompt": "Optimize this SPL query for me: index=main sourcetype=access_combined | stats count by status",
+      "expected_skill": null
+    },
+    {
+      "id": "test_does_not_trigger_on_dashboard_diagnostics",
+      "description": "Does NOT fire on a broken-dashboard triage request",
+      "tags": ["trigger", "negative"],
+      "prompt": "My classic dashboard panel is showing no data even though the underlying search returns results in the search bar. Can you help me figure out what's wrong?",
+      "expected_skill": null
+    },
+    {
+      "id": "test_does_not_trigger_on_unrelated_request",
+      "description": "Does NOT fire on a completely unrelated request",
+      "tags": ["trigger", "negative"],
+      "prompt": "Write me a Python script that reads a CSV file and prints the row count.",
+      "expected_skill": null
+    }
+  ]
+}

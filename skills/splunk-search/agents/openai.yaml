@@ -1,0 +1,4 @@
+interface:
+  display_name: "Splunk Search"
+  short_description: "Run bounded Splunk searches and inspect saved result tables safely."
+  default_prompt: "Use $splunk-search to run bounded Splunk searches with splsearch and analyze saved result tables without flooding context."

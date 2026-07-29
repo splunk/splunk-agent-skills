@@ -1,0 +1,4 @@
+interface:
+  display_name: "Splunk Dashboard Converter"
+  short_description: "Convert classic Simple XML dashboards into Dashboard Studio (v2) dashboards while preserving SPL."
+  default_prompt: "Use $splunk-dashboard-converter to convert a classic Splunk Simple XML dashboard into a Dashboard Studio (v2) JSON definition."

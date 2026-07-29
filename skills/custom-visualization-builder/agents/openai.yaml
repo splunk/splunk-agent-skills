@@ -1,0 +1,4 @@
+interface:
+  display_name: "Custom Visualization Builder"
+  short_description: "Build, package, install, and migrate Splunk dashboard custom visualizations."
+  default_prompt: "Use $custom-visualization-builder to scaffold, build, package, install, or migrate a Splunk dashboard custom visualization."
