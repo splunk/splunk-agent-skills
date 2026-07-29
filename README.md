@@ -21,18 +21,68 @@ directory contains the Go source for the helper CLI used by `splunk-search`.
 
 ## Install and use
 
-Copy the desired directory from `skills/` into the skills directory configured
-for an AI coding agent that supports `SKILL.md` files. Read the selected
-`SKILL.md` before use; it defines the prerequisites, workflow, and safety
-boundaries for that skill.
+This repository already uses the `skills/<name>/SKILL.md` layout expected by
+compatible AI coding agents. It does not need a repository-level `package.json`
+or publication to npm. The `npx` commands below run the independent
+[Vercel Labs `skills` CLI](https://github.com/vercel-labs/skills), which
+discovers and installs skills from GitHub repositories. Once this repository
+is public, Node.js users with npm can use the commands below.
 
-The `splunk-search` skill also requires the `splsearch` CLI on `PATH`. With Go
-1.21 or later installed, build it from the repository root:
+Available skill IDs:
+
+- `custom-visualization-builder`
+- `splunk-dashboard-converter`
+- `splunk-search`
+
+List the skills before installing:
 
 ```sh
+npx skills add splunk/splunk-agent-skills --list
+```
+
+Run one of these commands from a project root to copy all three skills for the
+selected agent:
+
+```sh
+npx skills add splunk/splunk-agent-skills --skill '*' --agent claude-code --copy --yes
+npx skills add splunk/splunk-agent-skills --skill '*' --agent codex --copy --yes
+npx skills add splunk/splunk-agent-skills --skill '*' --agent cursor --copy --yes
+npx skills add splunk/splunk-agent-skills --skill '*' --agent github-copilot --copy --yes
+npx skills add splunk/splunk-agent-skills --skill '*' --agent gemini-cli --copy --yes
+npx skills add splunk/splunk-agent-skills --skill '*' --agent opencode --copy --yes
+```
+
+Project scope is the default. Add `--global` to install into the selected
+agent's user-level skills directory instead. To copy only one skill, name it
+with `--skill`:
+
+```sh
+npx skills add splunk/splunk-agent-skills --skill splunk-search --agent codex --copy --yes
+```
+
+For a manual installation, clone or download this repository and copy the
+desired directory from `skills/` into the skills directory configured for the
+agent. Read the selected `SKILL.md` before use; it defines the prerequisites,
+workflow, and safety boundaries for that skill.
+
+The `skills` CLI installs skill directories; it does not install external
+executables. The `splunk-search` skill also requires the `splsearch` CLI on
+`PATH`. With Go 1.21 or later installed, clone this repository and build the
+CLI:
+
+```sh
+git clone https://github.com/splunk/splunk-agent-skills.git
+cd splunk-agent-skills
 make -C tools/splsearch build
 export PATH="$PWD/tools/splsearch/bin:$PATH"
 splsearch --help
+```
+
+Browser authentication also requires the Playwright driver and browser assets.
+Install them from the same clone:
+
+```sh
+make -C tools/splsearch playwright-install
 ```
 
 Then use the installed skill through your agent according to its normal skill
