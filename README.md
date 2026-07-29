@@ -22,11 +22,7 @@ directory contains the Go source for the helper CLI used by `splunk-search`.
 ## Install and use
 
 This repository already uses the `skills/<name>/SKILL.md` layout expected by
-compatible AI coding agents. It does not need a repository-level `package.json`
-or publication to npm. The `npx` commands below run the independent
-[Vercel Labs `skills` CLI](https://github.com/vercel-labs/skills), which
-discovers and installs skills from GitHub repositories. Once this repository
-is public, Node.js users with npm can use the commands below.
+compatible AI coding agents.
 
 Available skill IDs:
 
@@ -76,13 +72,6 @@ cd splunk-agent-skills
 make -C tools/splsearch build
 export PATH="$PWD/tools/splsearch/bin:$PATH"
 splsearch --help
-```
-
-Browser authentication also requires the Playwright driver and browser assets.
-Install them from the same clone:
-
-```sh
-make -C tools/splsearch playwright-install
 ```
 
 Then use the installed skill through your agent according to its normal skill
