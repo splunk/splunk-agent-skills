@@ -21,7 +21,7 @@ directory contains the Go source for the helper CLI used by `splunk-search`.
 
 ## Install and use
 
-This repository already uses the `skills/<name>/SKILL.md` layout expected by
+This repository uses the `skills/<name>/SKILL.md` layout expected by
 compatible AI coding agents.
 
 Available skill IDs:
