@@ -14,6 +14,7 @@ Splunk.
 | [`splunk-search`](skills/splunk-search/SKILL.md) | Run bounded Splunk SPL searches through the `splsearch` CLI, save large result sets as local SQLite tables, and inspect them with focused summaries, text search, ordered events, or bounded SQL. |
 | [`splunk-dashboard-converter`](skills/splunk-dashboard-converter/SKILL.md) | Convert classic Splunk Simple XML dashboards (version 1) into Dashboard Studio (version 2), preserve every SPL query verbatim, and return the Studio JSON definition to the caller. |
 | [`custom-visualization-builder`](skills/custom-visualization-builder/SKILL.md) | Scaffold, build, package, and install a custom visualization into Splunk using the `dashboard-studio-extension` framework. |
+| [`splunk-cloud-admin-copilot`](skills/splunk-cloud-admin-copilot/SKILL.md) | Read Splunk Cloud Platform ACS state, assess maintenance or restart readiness without changing it, and execute one explicitly approved IPv4 CIDR add or remove for one feature-specific IP allowlist through the documented public ACS provider. |
 
 
 Each skill is self-contained under `skills/`. The lowercase `tools/splsearch`
@@ -27,6 +28,7 @@ compatible AI coding agents.
 Available skill IDs:
 
 - `custom-visualization-builder`
+- `splunk-cloud-admin-copilot`
 - `splunk-dashboard-converter`
 - `splunk-search`
 
@@ -36,7 +38,7 @@ List the skills before installing:
 npx skills add splunk/splunk-agent-skills --list
 ```
 
-Run one of these commands from a project root to copy all three skills for the
+Run one of these commands from a project root to copy all four skills for the
 selected agent:
 
 ```sh
@@ -62,7 +64,11 @@ agent. Read the selected `SKILL.md` before use; it defines the prerequisites,
 workflow, and safety boundaries for that skill.
 
 The `skills` CLI installs skill directories; it does not install external
-executables. The `splunk-search` skill also requires the `splsearch` CLI on
+executables. The `splunk-cloud-admin-copilot` skill requires the separately
+installed `acs` CLI, preconfigured for the exact deployment and environment.
+The skill never runs login or setup commands.
+
+The `splunk-search` skill also requires the `splsearch` CLI on
 `PATH`. With Go 1.21 or later installed, clone this repository and build the
 CLI:
 
