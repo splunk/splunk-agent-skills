@@ -15,6 +15,8 @@ Splunk.
 | [`splunk-dashboard-converter`](skills/splunk-dashboard-converter/SKILL.md) | Convert classic Splunk Simple XML dashboards (version 1) into Dashboard Studio (version 2), preserve every SPL query verbatim, and return the Studio JSON definition to the caller. |
 | [`custom-visualization-builder`](skills/custom-visualization-builder/SKILL.md) | Scaffold, build, package, and install a custom visualization into Splunk using the `dashboard-studio-extension` framework. |
 | [`splunk-cloud-admin-copilot`](skills/splunk-cloud-admin-copilot/SKILL.md) | Read Splunk Cloud Platform ACS state, assess maintenance or restart readiness without changing it, and execute one explicitly approved IPv4 CIDR add or remove for one feature-specific IP allowlist through the documented public ACS provider. |
+| [`splunk-identity-saml-readiness-advisor`](skills/splunk-identity-saml-readiness-advisor/SKILL.md) | Research current public Splunk sources and use optional existing-auth read-only stack evidence to diagnose identity, SAML, LDAP, role, capability, mapping, login, and access-readiness problems without changing configuration or handling credentials. |
+| [`splunk-product-question-navigator`](skills/splunk-product-question-navigator/SKILL.md) | Research current public Splunk sources to answer general product questions with citations, applicability, and explicit uncertainty or routing. |
 
 
 Each skill is self-contained under `skills/`. The lowercase `tools/splsearch`
@@ -30,6 +32,8 @@ Available skill IDs:
 - `custom-visualization-builder`
 - `splunk-cloud-admin-copilot`
 - `splunk-dashboard-converter`
+- `splunk-identity-saml-readiness-advisor`
+- `splunk-product-question-navigator`
 - `splunk-search`
 
 List the skills before installing:
@@ -38,7 +42,7 @@ List the skills before installing:
 npx skills add splunk/splunk-agent-skills --list
 ```
 
-Run one of these commands from a project root to copy all four skills for the
+Run one of these commands from a project root to copy all six skills for the
 selected agent:
 
 ```sh
