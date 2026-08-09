@@ -1,0 +1,4 @@
+interface:
+  display_name: "HEC Setup and Troubleshooting"
+  short_description: "Set up and troubleshoot Splunk HEC safely"
+  default_prompt: "Use $hec-setup-and-troubleshooting to guide a documented HEC setup, validate a bounded delivery test, or diagnose a HEC failure from sanitized evidence."
