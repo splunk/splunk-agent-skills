@@ -18,6 +18,7 @@ Splunk.
 | [`splunk-identity-saml-readiness-advisor`](skills/splunk-identity-saml-readiness-advisor/SKILL.md) | Research current public Splunk sources and use optional existing-auth read-only stack evidence to diagnose identity, SAML, LDAP, role, capability, mapping, login, and access-readiness problems without changing configuration or handling credentials. |
 | [`splunk-product-question-navigator`](skills/splunk-product-question-navigator/SKILL.md) | Research current public Splunk sources to answer general product questions with citations, applicability, and explicit uncertainty or routing. |
 | [`hec-setup-and-troubleshooting`](skills/hec-setup-and-troubleshooting/SKILL.md) | Set up and validate Splunk HTTP Event Collector from current public documentation, diagnose delivery failures from sanitized evidence, and prepare bounded escalation handoffs without changing production systems. |
+| [`knowledge-object-governance`](skills/knowledge-object-governance/SKILL.md) | Give cited public Splunk knowledge-object governance guidance and assess user-authorized inventory, ownership, permissions, naming, lifecycle, lookup, and search-head comparison evidence without changing a deployment. |
 
 
 Each skill is self-contained under `skills/`. The lowercase `tools/splsearch`
@@ -32,6 +33,7 @@ Available skill IDs:
 
 - `custom-visualization-builder`
 - `hec-setup-and-troubleshooting`
+- `knowledge-object-governance`
 - `splunk-cloud-admin-copilot`
 - `splunk-dashboard-converter`
 - `splunk-identity-saml-readiness-advisor`
@@ -44,7 +46,7 @@ List the skills before installing:
 npx skills add splunk/splunk-agent-skills --list
 ```
 
-Run one of these commands from a project root to copy all seven skills for the
+Run one of these commands from a project root to copy all eight skills for the
 selected agent:
 
 ```sh

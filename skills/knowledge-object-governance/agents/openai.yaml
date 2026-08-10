@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowledge Object Governance"
+  short_description: "Review Splunk knowledge-object governance safely"
+  default_prompt: "Use $knowledge-object-governance to assess shared Splunk knowledge-object inventory, ownership, permissions, naming, lifecycle, lookup, or search-head-cluster evidence and produce a cited, read-only governance report."
