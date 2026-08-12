@@ -11,14 +11,16 @@ Splunk.
 
 | Skill | Purpose |
 | --- | --- |
-| [`splunk-search`](skills/splunk-search/SKILL.md) | Run bounded Splunk SPL searches through the `splsearch` CLI, save large result sets as local SQLite tables, and inspect them with focused summaries, text search, ordered events, or bounded SQL. |
-| [`splunk-dashboard-converter`](skills/splunk-dashboard-converter/SKILL.md) | Convert classic Splunk Simple XML dashboards (version 1) into Dashboard Studio (version 2), preserve every SPL query verbatim, and return the Studio JSON definition to the caller. |
 | [`custom-visualization-builder`](skills/custom-visualization-builder/SKILL.md) | Scaffold, build, package, and install a custom visualization into Splunk using the `dashboard-studio-extension` framework. |
-| [`splunk-cloud-admin-copilot`](skills/splunk-cloud-admin-copilot/SKILL.md) | Read Splunk Cloud Platform ACS state, assess maintenance or restart readiness without changing it, and execute one explicitly approved IPv4 CIDR add or remove for one feature-specific IP allowlist through the documented public ACS provider. |
-| [`splunk-identity-saml-readiness-advisor`](skills/splunk-identity-saml-readiness-advisor/SKILL.md) | Research current public Splunk sources and use optional existing-auth read-only stack evidence to diagnose identity, SAML, LDAP, role, capability, mapping, login, and access-readiness problems without changing configuration or handling credentials. |
-| [`splunk-product-question-navigator`](skills/splunk-product-question-navigator/SKILL.md) | Research current public Splunk sources to answer general product questions with citations, applicability, and explicit uncertainty or routing. |
 | [`hec-setup-and-troubleshooting`](skills/hec-setup-and-troubleshooting/SKILL.md) | Set up and validate Splunk HTTP Event Collector from current public documentation, diagnose delivery failures from sanitized evidence, and prepare bounded escalation handoffs without changing production systems. |
 | [`knowledge-object-governance`](skills/knowledge-object-governance/SKILL.md) | Give cited public Splunk knowledge-object governance guidance and assess user-authorized inventory, ownership, permissions, naming, lifecycle, lookup, and search-head comparison evidence without changing a deployment. |
+| [`splunk-cloud-admin-copilot`](skills/splunk-cloud-admin-copilot/SKILL.md) | Read Splunk Cloud Platform ACS state, assess maintenance or restart readiness without changing it, and execute one explicitly approved IPv4 CIDR add or remove for one feature-specific IP allowlist through the documented public ACS provider. |
+| [`splunk-dashboard-converter`](skills/splunk-dashboard-converter/SKILL.md) | Convert classic Splunk Simple XML dashboards (version 1) into Dashboard Studio (version 2), preserve every SPL query verbatim, and return the Studio JSON definition to the caller. |
+| [`splunk-identity-saml-readiness-advisor`](skills/splunk-identity-saml-readiness-advisor/SKILL.md) | Research current public Splunk sources and use optional existing-auth read-only stack evidence to diagnose identity, SAML, LDAP, role, capability, mapping, login, and access-readiness problems without changing configuration or handling credentials. |
+| [`splunk-product-question-navigator`](skills/splunk-product-question-navigator/SKILL.md) | Research current public Splunk sources to answer general product questions with citations, applicability, and explicit uncertainty or routing. |
+| [`splunk-search`](skills/splunk-search/SKILL.md) | Run bounded Splunk SPL searches through the `splsearch` CLI, save large result sets as local SQLite tables, and inspect them with focused summaries, text search, ordered events, or bounded SQL. |
+| [`upgrade-planning-and-execution-readiness`](skills/upgrade-planning-and-execution-readiness/SKILL.md) | Build cited, evidence-labeled Splunk Enterprise upgrade plans and Splunk Cloud support-assisted version-change readiness plans without performing or approving an upgrade. |
+| [`vulnerability-remediation-and-compliance-readiness`](skills/vulnerability-remediation-and-compliance-readiness/SKILL.md) | Assess Splunk vulnerability findings, remediation or exception evidence, compliance readiness, and documented vulnerability-management surfaces without changing a deployment or compliance state. |
 
 
 Each skill is self-contained under `skills/`. The lowercase `tools/splsearch`
@@ -39,6 +41,8 @@ Available skill IDs:
 - `splunk-identity-saml-readiness-advisor`
 - `splunk-product-question-navigator`
 - `splunk-search`
+- `upgrade-planning-and-execution-readiness`
+- `vulnerability-remediation-and-compliance-readiness`
 
 List the skills before installing:
 
@@ -46,7 +50,7 @@ List the skills before installing:
 npx skills add splunk/splunk-agent-skills --list
 ```
 
-Run one of these commands from a project root to copy all eight skills for the
+Run one of these commands from a project root to copy all ten skills for the
 selected agent:
 
 ```sh
