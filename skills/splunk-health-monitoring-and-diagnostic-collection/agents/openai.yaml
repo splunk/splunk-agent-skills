@@ -1,4 +1,0 @@
-interface:
-  display_name: "Splunk Health Monitoring and Diagnostic Collection"
-  short_description: "Collect and interpret Splunk health evidence."
-  default_prompt: "Use $splunk-health-monitoring-and-diagnostic-collection to preserve my supplied health facts, request only decisive missing evidence, and produce cited guidance or a bounded diagnostic packet."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Splunk Cloud Admin Copilot"
-  short_description: "Safely operate one approved Splunk Cloud IP allowlist CIDR."
-  default_prompt: "Use $splunk-cloud-admin-copilot to read the exact Splunk Cloud ACS target, execute at most one explicitly approved feature-specific IPv4 CIDR add or remove, verify it, roll back only when pre-authorized, and emit a sanitized receipt. Keep maintenance and restart readiness read-only, and route all other writes and specialist domains."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Splunk Product Question Navigator"
-  short_description: "Answer current Splunk product questions from public evidence."
-  default_prompt: "Use $splunk-product-question-navigator to research this Splunk product question against current public sources, answer with direct citations and explicit product, deployment, version, freshness, evidence, and inference boundaries, and route any operational, account-specific, or unpublished part to its owning workflow."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Splunk Identity and SAML Readiness Advisor"
-  short_description: "Diagnose Splunk SAML, LDAP, roles, mappings, and access read-only."
-  default_prompt: "Use $splunk-identity-saml-readiness-advisor to research current public Splunk sources, cite every substantive product claim, compare documented guidance with optional existing-auth read-only stack evidence, and diagnose SAML, LDAP, role, capability, group-mapping, login, or access-readiness problems without changing configuration or handling credentials."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Upgrade Planning and Execution Readiness"
-  short_description: "Plan cited, evidence-backed Splunk upgrades"
-  default_prompt: "Use $upgrade-planning-and-execution-readiness to inventory my Splunk upgrade scope, assess documented prerequisites and compatibility, and produce a bounded readiness, recovery, and validation plan without performing the upgrade."

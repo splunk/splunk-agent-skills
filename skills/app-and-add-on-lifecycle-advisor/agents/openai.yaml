@@ -1,4 +1,0 @@
-interface:
-  display_name: "App and Add-on Lifecycle Advisor"
-  short_description: "Assess Splunk app lifecycle readiness safely"
-  default_prompt: "Use $app-and-add-on-lifecycle-advisor to assess this Splunk app or add-on lifecycle question from current public documentation and supplied deployment evidence."

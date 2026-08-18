@@ -1,7 +1,0 @@
-bin/
-skills/*/bin/
-coverage.out
-.gocache/
-.gomodcache/
-eval-runs/
-__pycache__/

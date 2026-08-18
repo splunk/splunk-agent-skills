@@ -1,4 +1,0 @@
-interface:
-  display_name: "Field Extraction and CIM Mapping"
-  short_description: "Author and validate Splunk field and CIM mappings"
-  default_prompt: "Use $field-extraction-and-cim-mapping to draft or assess a cited Splunk field extraction and CIM mapping from representative evidence."

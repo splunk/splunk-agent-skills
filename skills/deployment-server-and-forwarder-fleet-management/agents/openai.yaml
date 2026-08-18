@@ -1,4 +1,0 @@
-interface:
-  display_name: "Deployment Server and Forwarder Fleet Management"
-  short_description: "Plan and diagnose Splunk forwarder fleet delivery"
-  default_prompt: "Use $deployment-server-and-forwarder-fleet-management to explain, plan, or diagnose Splunk Deployment Server and Agent Management fleet behavior from public documentation and sanitized evidence."
