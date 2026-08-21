@@ -4,17 +4,34 @@
 > These skills are experimental. They are not covered by existing Splunk
 > support contracts. Review [Support](SUPPORT.md) before using them.
 
-This repository contains reusable skills for AI agents working with
-Splunk.
+Skills are agent-facing instructions and tools that help AI agents work with
+Splunk. They may use Splunk documentation and product capabilities, but they
+are not product features, product code, or replacements for built-in product
+experiences.
 
 ## Skills
 
 | Skill | Purpose |
 | --- | --- |
+| [`app-and-add-on-lifecycle-advisor`](skills/app-and-add-on-lifecycle-advisor/SKILL.md) | Give cited, advisory-only guidance for Splunk app and add-on packaging, compatibility, installation, upgrade, validation, migration, and removal. |
 | [`custom-visualization-builder`](skills/custom-visualization-builder/SKILL.md) | Scaffold, build, package, and install a custom visualization into Splunk using the `dashboard-studio-extension` framework. |
+| [`deployment-server-and-forwarder-fleet-management`](skills/deployment-server-and-forwarder-fleet-management/SKILL.md) | Explain, plan, and diagnose Splunk Enterprise Deployment Server and Agent Management fleet behavior from public documentation and sanitized evidence without changing a deployment. |
+| [`field-extraction-and-cim-mapping`](skills/field-extraction-and-cim-mapping/SKILL.md) | Author, explain, diagnose, and validate Splunk search-time field extractions and Common Information Model mappings from representative evidence without deploying configuration or changing a Splunk environment. |
+| [`hec-setup-and-troubleshooting`](skills/hec-setup-and-troubleshooting/SKILL.md) | Set up and validate Splunk HTTP Event Collector from current public documentation, diagnose delivery failures from sanitized evidence, and prepare bounded escalation handoffs without changing production systems. |
+| [`knowledge-object-governance`](skills/knowledge-object-governance/SKILL.md) | Give cited public Splunk knowledge-object governance guidance and assess user-authorized inventory, ownership, permissions, naming, lifecycle, lookup, and search-head comparison evidence without changing a deployment. |
+| [`search-performance-optimizer`](skills/search-performance-optimizer/SKILL.md) | Diagnose and improve one existing functional Splunk search from supplied SPL and runtime evidence while preserving semantics and separating query, workload, and platform concerns. |
+| [`splunk-cloud-admin-copilot`](skills/splunk-cloud-admin-copilot/SKILL.md) | Read Splunk Cloud Platform ACS state, assess maintenance or restart readiness without changing it, and execute one explicitly approved IPv4 CIDR add or remove for one feature-specific IP allowlist through the documented public ACS provider. |
 | [`splunk-dashboard-converter`](skills/splunk-dashboard-converter/SKILL.md) | Convert classic Splunk Simple XML dashboards (version 1) into Dashboard Studio (version 2), preserve every SPL query verbatim, and return the Studio JSON definition to the caller. |
+| [`splunk-health-monitoring-and-diagnostic-collection`](skills/splunk-health-monitoring-and-diagnostic-collection/SKILL.md) | Explain Splunk health-monitoring surfaces, collect the smallest useful evidence, guide privacy-aware diagnostic collection, and turn supplied observations into a bounded diagnostic packet without changing a system. |
+| [`splunk-identity-saml-readiness-advisor`](skills/splunk-identity-saml-readiness-advisor/SKILL.md) | Research current public Splunk sources and use optional existing-auth read-only stack evidence to diagnose identity, SAML, LDAP, role, capability, mapping, login, and access-readiness problems without changing configuration or handling credentials. |
+| [`splunk-product-question-navigator`](skills/splunk-product-question-navigator/SKILL.md) | Research current public Splunk sources to answer general product questions with citations, applicability, and explicit uncertainty or routing. |
+| [`splunk-search`](skills/splunk-search/SKILL.md) | Run bounded Splunk SPL searches through the `splsearch` CLI, save large result sets as local SQLite tables, and inspect them with focused summaries, text search, ordered events, or bounded SQL. |
+| [`upgrade-planning-and-execution-readiness`](skills/upgrade-planning-and-execution-readiness/SKILL.md) | Build cited, evidence-labeled Splunk Enterprise upgrade plans and Splunk Cloud support-assisted version-change readiness plans without performing or approving an upgrade. |
+| [`vulnerability-remediation-and-compliance-readiness`](skills/vulnerability-remediation-and-compliance-readiness/SKILL.md) | Assess Splunk vulnerability findings, remediation or exception evidence, compliance readiness, and documented vulnerability-management surfaces without changing a deployment or compliance state. |
 
-Each skill is self-contained under `skills/`.
+
+Each skill is self-contained under `skills/`. The lowercase `tools/splsearch`
+directory contains the Go source for the helper CLI used by `splunk-search`.
 
 ## Install and use
 
@@ -23,8 +40,21 @@ compatible AI coding agents.
 
 Available skill IDs:
 
+- `app-and-add-on-lifecycle-advisor`
 - `custom-visualization-builder`
+- `deployment-server-and-forwarder-fleet-management`
+- `field-extraction-and-cim-mapping`
+- `hec-setup-and-troubleshooting`
+- `knowledge-object-governance`
+- `search-performance-optimizer`
+- `splunk-cloud-admin-copilot`
 - `splunk-dashboard-converter`
+- `splunk-health-monitoring-and-diagnostic-collection`
+- `splunk-identity-saml-readiness-advisor`
+- `splunk-product-question-navigator`
+- `splunk-search`
+- `upgrade-planning-and-execution-readiness`
+- `vulnerability-remediation-and-compliance-readiness`
 
 List the skills before installing:
 
@@ -32,7 +62,7 @@ List the skills before installing:
 npx skills add splunk/splunk-agent-skills --list
 ```
 
-Run one of these commands from a project root to copy both skills for the
+Run one of these commands from a project root to copy all fifteen skills for the
 selected agent:
 
 ```sh
@@ -49,13 +79,33 @@ agent's user-level skills directory instead. To copy only one skill, name it
 with `--skill`:
 
 ```sh
-npx skills add splunk/splunk-agent-skills --skill custom-visualization-builder --agent codex --copy --yes
+npx skills add splunk/splunk-agent-skills --skill splunk-search --agent codex --copy --yes
 ```
 
 For a manual installation, clone or download this repository and copy the
 desired directory from `skills/` into the skills directory configured for the
 agent. Read the selected `SKILL.md` before use; it defines the prerequisites,
 workflow, and safety boundaries for that skill.
+
+The `skills` CLI installs skill directories; it does not install external
+executables. The `splunk-cloud-admin-copilot` skill requires the separately
+installed `acs` CLI, preconfigured for the exact deployment and environment.
+The skill never runs login or setup commands.
+
+The `splunk-search` skill also requires the `splsearch` CLI on
+`PATH`. With Go 1.21 or later installed, clone this repository and build the
+CLI:
+
+```sh
+git clone https://github.com/splunk/splunk-agent-skills.git
+cd splunk-agent-skills
+make -C tools/splsearch build
+export PATH="$PWD/tools/splsearch/bin:$PATH"
+splsearch --help
+```
+
+Then use the installed skill through your agent according to its normal skill
+invocation workflow.
 
 ## Policies
 

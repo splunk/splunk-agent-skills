@@ -1,0 +1,4 @@
+interface:
+  display_name: "Search Performance Optimizer"
+  short_description: "Optimize existing Splunk searches from evidence"
+  default_prompt: "Use $search-performance-optimizer to assess this existing Splunk search and its runtime evidence, recommend the smallest safe optimization, and define a comparable before-and-after validation plan."
